@@ -112,6 +112,7 @@ public class Plugins {
                     }
                     String cname = je.getName();
                     cname = cname.substring(0,cname.length()-6);
+                    cname = cname.replace('/','.'); // required by JDK1.5
                     Class pc = loader.loadClass(cname);
                     if (loader.attemptPluginDefine(pc)) {
                         if (DEBUG) {
