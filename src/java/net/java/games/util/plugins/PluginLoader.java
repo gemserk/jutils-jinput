@@ -24,7 +24,7 @@
  * ANY IMPLIED WARRANT OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
  * NON-INFRINGEMEN, ARE HEREBY EXCLUDED.  SUN MICROSYSTEMS, INC. ("SUN") AND
  * ITS LICENSORS SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS
- * A RESULT OF USING, MODIFYING OR DESTRIBUTING THIS SOFTWARE OR ITS 
+ * A RESULT OF USING, MODIFYING OR DESTRIBUTING THIS SOFTWARE OR ITS
  * DERIVATIVES.  IN NO EVENT WILL SUN OR ITS LICENSORS BE LIABLE FOR ANY LOST
  * REVENUE, PROFIT OR DATA, OR FOR DIRECT, INDIRECT, SPECIAL, CONSEQUENTIAL,
  * INCIDENTAL OR PUNITIVE DAMAGES.  HOWEVER CAUSED AND REGARDLESS OF THE THEORY
@@ -68,6 +68,7 @@ import java.net.*;
 public class PluginLoader extends URLClassLoader {
     static final boolean DEBUG = false;
     File parentDir;
+    boolean localDLLs = true;
     /** Creates a new instance of PluginLodaer
      * @param jf The JarFile to load the Plugins from.
      * @throws MalformedURLException Will throw this exception if jf does not refer to a
@@ -76,8 +77,12 @@ public class PluginLoader extends URLClassLoader {
     public PluginLoader(File jf) throws MalformedURLException {
         super(new URL[] {jf.toURL()});
         parentDir = jf.getParentFile();
+        if (System.getProperty("net.java.games.util.plugins.nolocalnative")
+            !=null){
+          localDLLs = false;
+        }
     }
-    
+
     /** This method is queried by the System.loadLibrary()
      * code to find the actual native name and path to the
      * native library to load.
@@ -91,16 +96,20 @@ public class PluginLoader extends URLClassLoader {
      * @param libname The JNI name of the native library to locate.
      * @return Returns a string describing the actual loation of the
      * native library in the native file system.
-     */    
+     */
     protected String findLibrary(String libname){
-        String libpath = parentDir.getPath()+File.separator+
+      if (localDLLs) {
+        String libpath = parentDir.getPath() + File.separator +
             System.mapLibraryName(libname);
         if (DEBUG) {
-            System.out.println("Returning libname of: "+libpath);
+          System.out.println("Returning libname of: " + libpath);
         }
         return libpath;
+      } else {
+        return super.findLibrary(libname);
+      }
     }
-    
+
     /** This function is called as part of scanning the Jar for
      * plugins.  It checks to make sure the class passed in is
      * a legitimate plugin, which is to say that it meets
@@ -114,11 +123,11 @@ public class PluginLoader extends URLClassLoader {
      * @param pc The potential plug-in class to vette.
      * @return Returns true if the class meets the criteria for a
      * plugin. Otherwise returns false.
-     */    
+     */
     public boolean attemptPluginDefine(Class pc){
         return ((!pc.isInterface()) && classImplementsPlugin(pc));
     }
-    
+
     private boolean classImplementsPlugin(Class testClass){
         if (testClass == null) return false; // end of tree
         if (DEBUG) {
@@ -143,5 +152,5 @@ public class PluginLoader extends URLClassLoader {
         }
         return classImplementsPlugin(testClass.getSuperclass());
     }
-    
+
 }
