@@ -21,7 +21,7 @@
         <mkdir dir="bin" />
         <mkdir dir="classes" />
         <mkdir dir="apidocs" />
-        <mkdir dir="src/tests/test_plugin" />
+        <mkdir dir="src/tests/test_plugins" />
     </target>
 
     <target name="compile" depends="init">
