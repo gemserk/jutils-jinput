@@ -129,7 +129,7 @@ public class Plugins {
     /** This method returns all the Plugins found in the
      * directory passed in at object creation time or any of its
      * sub-directories.
-     * @return
+     * @return An array of Plugin objects
      */
     public Class[] get(){
         Class[] pluginArray = new Class[pluginList.size()];
