@@ -84,6 +84,19 @@
             <!-- <arg file="myfile.txt"/> -->
         </java>
     </target>
+    <target name="testnodir" depends="init,all" description="Try running it.">
+        <java classname="net.java.games.util.plugins.test.PluginTest" 
+              fork="true" dir="." failonerror="true">
+            <classpath>
+               <!-- <pathelement location= "classes" /> -->
+                <pathelement location="bin/jutils.jar"/>
+            </classpath>
+            <!-- Pass some args, perhaps: -->
+            <!-- <arg value="-myfile"/> -->
+            <!-- Will be given as an absolute path: -->
+            <!-- <arg file="myfile.txt"/> -->
+        </java>
+    </target>
 
     <target name="javadoc" depends="init" description="Javadoc for input API.">
         <javadoc packagenames="net.java.games.util.plugins.*" 

@@ -82,11 +82,18 @@ class ListUpdater implements Runnable{
 
 public class PluginTest {
     static final boolean DEBUG = false;
-    Plugins plugins = new Plugins(new File("test_plugins"));
+    
+    Plugins plugins;
     JList plist;
     Class[] piList; // holder for current list of plugins
     /** Creates a new instance of PluginTest */
     public PluginTest() {
+        try {
+            plugins = new Plugins(new File("test_plugins"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
         JFrame f = new JFrame("PluginTest");
         plist = new JList(new DefaultListModel());
         plist.setCellRenderer(new ClassRenderer());

@@ -69,12 +69,16 @@ public class Plugins {
      * @param pluginRoot The root od the directory tree to scan for Jars
      * containing plugins.
      */
-    public Plugins(File pluginRoot) {
-        scanPlugins(pluginRoot);
+    public Plugins(File pluginRoot) throws IOException {
+            scanPlugins(pluginRoot);    
     }
     
-    private void scanPlugins(File dir) {
+    private void scanPlugins(File dir) throws IOException {
         File[] files = dir.listFiles();
+        if (files == null) {
+            throw new FileNotFoundException("Plugin directory "+dir.getName()+
+                " not found.");
+        }
         for(int i=0;i<files.length;i++){
             File f = files[i];
             if (f.getName().endsWith(".jar")) { // process JAR file
