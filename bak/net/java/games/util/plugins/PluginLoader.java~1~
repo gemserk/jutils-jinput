@@ -70,12 +70,6 @@ public class PluginLoader extends URLClassLoader {
     File parentDir;
     boolean localDLLs = true;
     /** Creates a new instance of PluginLodaer
-     * If the system property "net.java.games.util.plugins.nolocalnative" is
-     * not set then the laoder will look for requried native libs in the
-     * same directory as the plugin jar.  (Useful for handling name
-     * collision between plugins).  If it IS set however, then it will
-     * fall back to the default way of loading natives.  (Necessary for
-     * Java Web Start.)
      * @param jf The JarFile to load the Plugins from.
      * @throws MalformedURLException Will throw this exception if jf does not refer to a
      * legitimate Jar file.
