@@ -81,7 +81,8 @@ public class PluginLoader extends URLClassLoader {
      * legitimate Jar file.
      */
     public PluginLoader(File jf) throws MalformedURLException {
-        super(new URL[] {jf.toURL()});
+        super(new URL[] {jf.toURL()},
+              Thread.currentThread().getContextClassLoader());
         parentDir = jf.getParentFile();
         if (System.getProperty("net.java.games.util.plugins.nolocalnative")
             !=null){
@@ -99,6 +100,12 @@ public class PluginLoader extends URLClassLoader {
      * created to support.  This allows different Plugins
      * with supporting DLLs of the same name to co-exist, each
      * in their own subdirectory.
+     *
+     * Setting the global  "localDLLs" by setting the property
+     * net.java.games.util.plugins.nolocalnative defeats this behavior.
+     * This is necessary for Java Web Start apps which have strong
+     * restrictions on where and how native libs can be loaded.
+     *
      * @param libname The JNI name of the native library to locate.
      * @return Returns a string describing the actual loation of the
      * native library in the native file system.
