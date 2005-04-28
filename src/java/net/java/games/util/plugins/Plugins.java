@@ -101,8 +101,8 @@ public class Plugins {
             }
             PluginLoader loader = new PluginLoader(f);
             JarFile jf = new JarFile(f);
-            for (Enumeration enum = jf.entries();enum.hasMoreElements();){
-                JarEntry je = (JarEntry)enum.nextElement();
+            for (Enumeration en = jf.entries();en.hasMoreElements();){
+                JarEntry je = (JarEntry)en.nextElement();
                 if (DEBUG) {
                     System.out.println("Examining file : "+je.getName());
                 }
