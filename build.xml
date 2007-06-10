@@ -60,8 +60,7 @@
             <exclude name="apidoc"/>
             <exclude name="**/plugins/test/*Plugin.class"/>
         </jar>
-        <copy file="bin/jutils.jar" todir="../jinput/coreAPI/lib" />
-        <copy file="bin/jutils.jar" todir="../jinput/plugins/DX8/lib" />
+        <copy file="bin/jutils.jar" todir="../jinput/lib" />
         <jar jarfile="src/tests/test_plugins/test_plugins.jar" compress="true" basedir="classes">
             <include name="**/plugins/test/*Plugin.class"/>
         </jar>
