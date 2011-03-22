@@ -4,7 +4,7 @@
 	<artifactId>jutils</artifactId>
 	<packaging>jar</packaging>
 	<name>Common utilities for the Game Technology Group</name>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<description>Common utilities for the Game Technology Group</description>
 	<url>http://java.net/projects/jutils</url>
 	<licenses>
